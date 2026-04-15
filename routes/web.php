@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\AutomationController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta raiz
@@ -24,6 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //RUTAS DE CONTROLADORES Y MODELO DE AUTOMATIZACIÓN DE TAREA
+
+    Route::resource('automations', AutomationController::class);
 });
 
 require __DIR__ . '/auth.php';
