@@ -1,0 +1,371 @@
+/* =============================================
+   AutoFlow — Design System
+   Tokens, components y utilidades globales
+   ============================================= */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ── Tokens ── */
+:root {
+    /* Colores primarios */
+    --af-primary:         #2563EB;
+    --af-primary-dark:    #1d4ed8;
+    --af-primary-light:   #60a5fa;
+    --af-primary-lighter: #dbeafe;
+    --af-accent:          #3b82f6;
+
+    /* Texto */
+    --af-text-dark:        #1e293b;
+    --af-text-medium:      #374151;
+    --af-text-muted:       #64748b;
+    --af-text-placeholder: #94a3b8;
+
+    /* Bordes y fondos */
+    --af-border:       #e2e8f0;
+    --af-border-light: #f1f5f9;
+    --af-bg:           #f8fafc;
+    --af-bg-card:      #ffffff;
+
+    /* Estados */
+    --af-success:       #10b981;
+    --af-success-light: #d1fae5;
+    --af-success-text:  #065f46;
+    --af-warning:       #f59e0b;
+    --af-warning-light: #fef3c7;
+    --af-warning-text:  #92400e;
+    --af-danger:        #ef4444;
+    --af-danger-light:  #fee2e2;
+    --af-danger-text:   #991b1b;
+    --af-info:          #3b82f6;
+    --af-info-light:    #dbeafe;
+    --af-info-text:     #1e40af;
+
+    /* Radios */
+    --af-radius:    8px;
+    --af-radius-lg: 12px;
+    --af-radius-xl: 16px;
+    --af-radius-2xl:20px;
+    --af-radius-full: 9999px;
+
+    /* Sombras */
+    --af-shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+    --af-shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --af-shadow:    0 4px 12px rgba(0,0,0,0.08);
+    --af-shadow-md: 0 6px 20px rgba(0,0,0,0.09);
+    --af-shadow-lg: 0 10px 30px rgba(0,0,0,0.10);
+    --af-shadow-primary: 0 4px 14px rgba(37,99,235,0.35);
+
+    /* Sidebar */
+    --af-sidebar-w:        252px;
+    --af-sidebar-bg:       #ffffff;
+    --af-sidebar-border:   #e2e8f0;
+    --af-topbar-h:         60px;
+
+    /* Tipografía */
+    --af-font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --af-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Transiciones */
+    --af-transition: 0.18s ease;
+    --af-transition-md: 0.25s ease;
+}
+
+/* ── Reset base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--af-font);
+    color: var(--af-text-dark);
+    background: var(--af-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Logo SVG ── */
+.af-logo-icon {
+    display: inline-flex;
+    position: relative;
+    width: 38px;
+    height: 34px;
+    flex-shrink: 0;
+}
+.af-logo-sq {
+    position: absolute;
+    border-radius: 5px;
+    background: var(--af-primary);
+}
+.af-logo-sq-1 { width: 20px; height: 20px; top: 0; left: 0; background: var(--af-primary); }
+.af-logo-sq-2 { width: 16px; height: 16px; top: 0;  right: 0; background: var(--af-primary-light); }
+.af-logo-sq-3 { width: 16px; height: 16px; bottom: 0; left: 4px; background: var(--af-accent); }
+
+.af-logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--af-text-dark);
+    letter-spacing: -0.5px;
+}
+
+/* ── Inputs ── */
+.af-input {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--af-border);
+    border-radius: var(--af-radius);
+    font-size: 0.925rem;
+    font-family: var(--af-font);
+    color: var(--af-text-dark);
+    background: var(--af-bg-card);
+    transition: border-color var(--af-transition), box-shadow var(--af-transition);
+    box-sizing: border-box;
+}
+.af-input::placeholder { color: var(--af-text-placeholder); }
+.af-input:focus {
+    outline: none;
+    border-color: var(--af-primary) !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12) !important;
+}
+.af-input.af-input--error {
+    border-color: var(--af-danger);
+}
+
+.af-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--af-text-medium);
+    margin-bottom: 6px;
+}
+
+.af-field { margin-bottom: 20px; }
+
+/* Textarea */
+.af-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Select */
+.af-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* ── Botones ── */
+.af-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--af-radius);
+    font-family: var(--af-font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--af-transition), box-shadow var(--af-transition), transform 0.12s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.af-btn:active { transform: translateY(0) !important; }
+
+.af-btn--primary {
+    background: var(--af-primary);
+    color: #fff;
+}
+.af-btn--primary:hover {
+    background: var(--af-primary-dark);
+    box-shadow: var(--af-shadow-primary);
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+.af-btn--secondary {
+    background: var(--af-bg-card);
+    color: var(--af-text-medium);
+    border: 1.5px solid var(--af-border);
+}
+.af-btn--secondary:hover {
+    background: var(--af-bg);
+    border-color: #cbd5e1;
+    box-shadow: var(--af-shadow-sm);
+    color: var(--af-text-dark);
+}
+
+.af-btn--danger {
+    background: var(--af-danger);
+    color: #fff;
+}
+.af-btn--danger:hover {
+    background: #dc2626;
+    box-shadow: 0 4px 14px rgba(239,68,68,0.35);
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+.af-btn--ghost {
+    background: transparent;
+    color: var(--af-text-muted);
+    border: 1.5px solid transparent;
+}
+.af-btn--ghost:hover {
+    background: var(--af-bg);
+    color: var(--af-text-dark);
+    border-color: var(--af-border);
+}
+
+.af-btn--sm { padding: 7px 14px; font-size: 0.825rem; }
+.af-btn--lg { padding: 13px 28px; font-size: 1rem; }
+.af-btn--full { width: 100%; }
+.af-btn--icon { padding: 9px; }
+
+/* ── Badges / Pills ── */
+.af-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: var(--af-radius-full);
+    font-size: 0.775rem;
+    font-weight: 600;
+}
+.af-badge--primary { background: var(--af-primary-lighter); color: var(--af-info-text); }
+.af-badge--success { background: var(--af-success-light); color: var(--af-success-text); }
+.af-badge--warning { background: var(--af-warning-light); color: var(--af-warning-text); }
+.af-badge--danger  { background: var(--af-danger-light);  color: var(--af-danger-text); }
+.af-badge--muted   { background: #f1f5f9; color: var(--af-text-muted); }
+
+/* Dot inside badge */
+.af-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ── Cards ── */
+.af-card {
+    background: var(--af-bg-card);
+    border: 1px solid var(--af-border);
+    border-radius: var(--af-radius-lg);
+    box-shadow: var(--af-shadow-sm);
+}
+.af-card__body  { padding: 24px; }
+.af-card__header{
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--af-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.af-card__footer{
+    padding: 14px 24px;
+    border-top: 1px solid var(--af-border-light);
+}
+
+/* ── Alertas ── */
+.af-alert {
+    padding: 12px 16px;
+    border-radius: var(--af-radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.af-alert--success { background: var(--af-success-light); color: var(--af-success-text); }
+.af-alert--danger  { background: var(--af-danger-light);  color: var(--af-danger-text); }
+.af-alert--warning { background: var(--af-warning-light); color: var(--af-warning-text); }
+.af-alert--info    { background: var(--af-info-light);    color: var(--af-info-text); }
+
+/* ── Error de campo ── */
+.af-field-error {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: var(--af-danger);
+}
+
+/* ── Divider ── */
+.af-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--af-text-placeholder);
+    font-size: 0.825rem;
+}
+.af-divider::before,
+.af-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--af-border);
+}
+
+/* ── Table ── */
+.af-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.af-table thead tr {
+    background: var(--af-bg);
+    border-bottom: 1px solid var(--af-border);
+}
+.af-table thead th {
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--af-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.af-table tbody tr {
+    border-bottom: 1px solid var(--af-border-light);
+    transition: background var(--af-transition);
+}
+.af-table tbody tr:last-child { border-bottom: none; }
+.af-table tbody tr:hover { background: #f8fafc; }
+.af-table tbody td { padding: 13px 16px; color: var(--af-text-dark); vertical-align: middle; }
+
+/* ── Toggle Switch ── */
+.af-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.af-toggle input { display: none; }
+.af-toggle-track {
+    width: 40px;
+    height: 22px;
+    border-radius: var(--af-radius-full);
+    background: #cbd5e1;
+    transition: background var(--af-transition);
+    position: relative;
+}
+.af-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: var(--af-shadow-xs);
+    transition: transform var(--af-transition);
+}
+.af-toggle input:checked ~ .af-toggle-track { background: var(--af-primary); }
+.af-toggle input:checked ~ .af-toggle-track .af-toggle-thumb { transform: translateX(18px); }
+
+/* ── Utilidades ── */
+.af-sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}

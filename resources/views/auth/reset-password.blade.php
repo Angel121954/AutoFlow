@@ -1,39 +1,77 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
 
-        <!-- Password Reset Token -->
+    <div class="af-auth-heading">
+        <h1>Nueva contraseña</h1>
+        <p>Elige una contraseña segura para tu cuenta</p>
+    </div>
+
+    <form method="POST" action="{{ route('password.store') }}" novalidate>
+        @csrf
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Email (oculto visualmente, requerido por Laravel) --}}
+        <div class="af-field">
+            <label for="email" class="af-label">Correo electrónico</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email', $request->email) }}"
+                required
+                autocomplete="username"
+                class="af-input {{ $errors->has('email') ? 'af-input--error' : '' }}" />
+            @error('email')
+                <p class="af-field-error">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        {{-- Nueva contraseña --}}
+        <div class="af-field">
+            <label for="password" class="af-label">Nueva contraseña</label>
+            <div class="af-input-group">
+                <svg class="af-input-group__icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                    autocomplete="new-password"
+                    class="af-input {{ $errors->has('password') ? 'af-input--error' : '' }}" />
+            </div>
+            @error('password')
+                <p class="af-field-error">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        {{-- Confirmar contraseña --}}
+        <div class="af-field" style="margin-bottom: 24px;">
+            <label for="password_confirmation" class="af-label">Confirmar contraseña</label>
+            <div class="af-input-group">
+                <svg class="af-input-group__icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <input
+                    id="password_confirmation"
+                    type="password"
+                    name="password_confirmation"
+                    placeholder="Repite tu contraseña"
+                    required
+                    autocomplete="new-password"
+                    class="af-input {{ $errors->has('password_confirmation') ? 'af-input--error' : '' }}" />
+            </div>
+            @error('password_confirmation')
+                <p class="af-field-error">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="af-btn af-btn--primary af-btn--full af-btn--lg">
+            Restablecer contraseña
+        </button>
     </form>
+
 </x-guest-layout>

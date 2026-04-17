@@ -1,0 +1,319 @@
+/* =============================================
+   AutoFlow — Automations
+   ============================================= */
+
+/* ── Filtros y búsqueda ── */
+.af-filters {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.af-search-box {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+}
+.af-search-box input {
+    padding-left: 40px;
+}
+.af-search-box__icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--af-text-placeholder);
+    pointer-events: none;
+}
+.af-filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.af-filter-pill {
+    padding: 6px 14px;
+    border-radius: var(--af-radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1.5px solid var(--af-border);
+    background: var(--af-bg-card);
+    color: var(--af-text-muted);
+    cursor: pointer;
+    transition: all var(--af-transition);
+}
+.af-filter-pill:hover,
+.af-filter-pill--active {
+    border-color: var(--af-primary);
+    background: var(--af-primary-lighter);
+    color: var(--af-primary);
+}
+
+/* ── Grid de tarjetas de automatización ── */
+.af-automations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+/* ── Tarjeta de automatización ── */
+.af-automation-card {
+    background: var(--af-bg-card);
+    border: 1px solid var(--af-border);
+    border-radius: var(--af-radius-lg);
+    box-shadow: var(--af-shadow-sm);
+    transition: box-shadow var(--af-transition), transform var(--af-transition), border-color var(--af-transition);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.af-automation-card:hover {
+    box-shadow: var(--af-shadow);
+    transform: translateY(-2px);
+    border-color: #d1d5db;
+}
+
+.af-automation-card__header {
+    padding: 18px 18px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+.af-automation-card__title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+.af-automation-card__trigger-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--af-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+.af-automation-card__trigger-icon--email   { background: #fef3c7; color: #d97706; }
+.af-automation-card__trigger-icon--whatsapp{ background: #dcfce7; color: #16a34a; }
+.af-automation-card__trigger-icon--registro{ background: var(--af-primary-lighter); color: var(--af-primary); }
+.af-automation-card__trigger-icon--pago    { background: #f3e8ff; color: #9333ea; }
+.af-automation-card__trigger-icon--default { background: var(--af-bg); color: var(--af-text-muted); }
+
+.af-automation-card__info { flex: 1; min-width: 0; }
+.af-automation-card__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--af-text-dark);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.af-automation-card__desc {
+    font-size: 0.8rem;
+    color: var(--af-text-muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Toggle de activo */
+.af-automation-card__toggle { flex-shrink: 0; margin-top: 2px; }
+
+/* Footer de la tarjeta */
+.af-automation-card__footer {
+    padding: 12px 18px;
+    border-top: 1px solid var(--af-border-light);
+    background: var(--af-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.af-automation-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.af-automation-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.af-automation-card__action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--af-text-placeholder);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--af-transition), color var(--af-transition);
+}
+.af-automation-card__action-btn:hover { background: var(--af-border-light); color: var(--af-text-dark); }
+.af-automation-card__action-btn--danger:hover { background: var(--af-danger-light); color: var(--af-danger); }
+
+/* ── Formulario de crear/editar ── */
+.af-form-page { max-width: 680px; }
+
+.af-form-section {
+    background: var(--af-bg-card);
+    border: 1px solid var(--af-border);
+    border-radius: var(--af-radius-lg);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--af-shadow-sm);
+}
+.af-form-section__header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--af-border-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.af-form-section__title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--af-text-dark);
+}
+.af-form-section__step {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--af-primary);
+    color: #fff;
+    font-size: 0.725rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.af-form-section__body {
+    padding: 22px;
+}
+
+/* Selector de trigger */
+.af-trigger-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+}
+.af-trigger-option {
+    border: 1.5px solid var(--af-border);
+    border-radius: var(--af-radius);
+    padding: 14px 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    transition: all var(--af-transition);
+    background: var(--af-bg-card);
+}
+.af-trigger-option:hover {
+    border-color: var(--af-primary);
+    background: var(--af-primary-lighter);
+}
+.af-trigger-option.selected,
+.af-trigger-option input:checked + label,
+.af-trigger-option--selected {
+    border-color: var(--af-primary);
+    background: var(--af-primary-lighter);
+}
+.af-trigger-option input[type="radio"] { display: none; }
+.af-trigger-option__emoji { font-size: 1.6rem; }
+.af-trigger-option__label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--af-text-medium);
+}
+
+/* Acciones del formulario */
+.af-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+/* ── Vista de detalle (show) ── */
+.af-detail-header {
+    background: var(--af-bg-card);
+    border: 1px solid var(--af-border);
+    border-radius: var(--af-radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--af-shadow-sm);
+}
+.af-detail-header__left {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+.af-detail-header__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--af-text-dark);
+    margin: 0 0 6px;
+}
+.af-detail-header__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.af-detail-header__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.af-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+    align-items: start;
+}
+@media (max-width: 900px) {
+    .af-detail-grid { grid-template-columns: 1fr; }
+}
+
+/* Línea de tiempo de ejecuciones */
+.af-executions-list { display: flex; flex-direction: column; }
+.af-execution-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--af-border-light);
+}
+.af-execution-item:last-child { border-bottom: none; }
+.af-execution-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+.af-execution-status-dot--success { background: var(--af-success); }
+.af-execution-status-dot--error   { background: var(--af-danger); }
+.af-execution-status-dot--pending { background: var(--af-warning); }
