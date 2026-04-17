@@ -8,6 +8,11 @@
 
     <title>{{ $title ?? config('app.name', 'AutoFlow') }}</title>
 
+    {{-- Favicon --}}
+    <link rel="icon"             type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon"    type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="apple-touch-icon"                  href="{{ asset('favicon.png') }}">
+
     {{-- Fuente --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +27,80 @@
 
     {{-- Hojas adicionales por vista --}}
     @stack('styles')
+
+    {{-- SweetAlert2 --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        /* ── AutoFlow SweetAlert2 theme ── */
+        .af-swal-popup {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 14px !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,.04), 0 24px 60px rgba(0,0,0,.12) !important;
+            color: #1e293b !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        .af-swal-popup .swal2-title {
+            color: #0f172a !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+        }
+        .af-swal-popup .swal2-html-container {
+            color: #64748b !important;
+            font-size: 0.875rem !important;
+            line-height: 1.6 !important;
+        }
+        .af-swal-popup .swal2-icon { border-color: transparent !important; }
+        .af-swal-popup .swal2-icon.swal2-warning { color: #d97706; border-color: #fcd34d !important; }
+        .af-swal-popup .swal2-icon.swal2-error   { color: #dc2626; border-color: #fca5a5 !important; }
+        .af-swal-popup .swal2-icon.swal2-success { border-color: #86efac !important; }
+        .af-swal-popup .swal2-icon.swal2-success [class^='swal2-success-line'] { background: #16a34a !important; }
+        .af-swal-popup .swal2-icon.swal2-success .swal2-success-ring { border-color: rgba(22,163,74,.25) !important; }
+        .af-swal-popup .swal2-actions { gap: 10px !important; }
+        .af-swal-popup .swal2-timer-progress-bar { background: #2563eb !important; }
+
+        /* Botones del popup */
+        .af-swal-confirm {
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            background: #dc2626;
+            color: #fff;
+            transition: opacity .15s;
+        }
+        .af-swal-confirm:hover { opacity: .88; }
+        .af-swal-cancel {
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            background: #fff;
+            color: #64748b;
+            transition: background .15s;
+        }
+        .af-swal-cancel:hover { background: #f8fafc; }
+
+        /* Toast */
+        .af-swal-toast.swal2-popup {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 4px 24px rgba(0,0,0,.1) !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        .af-swal-toast .swal2-title {
+            color: #0f172a !important;
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+        }
+        .af-swal-toast .swal2-timer-progress-bar {
+            background: #2563eb !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -68,7 +147,13 @@
                 Mis Automatizaciones
             </a>
 
-            <a href="{{ route('automations.create') }}"
+            <a href="{{ route('automations.index') }}?new=1"
+               onclick="
+                   if (typeof openCreateModal === 'function') {
+                       event.preventDefault();
+                       openCreateModal();
+                   }
+               "
                class="af-nav-item {{ request()->routeIs('automations.create') ? 'active' : '' }}">
                 <svg class="af-nav-item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -237,6 +322,25 @@
 </script>
 
 @stack('scripts')
-</body>
 
+{{-- SweetAlert2 CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    /* ── Flash toasts globales ── */
+    const AfToast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        customClass: { popup: 'af-swal-toast' },
+    });
+    @if(session('success'))
+        AfToast.fire({ icon: 'success', title: {!! json_encode(session('success')) !!} });
+    @endif
+    @if(session('error'))
+        AfToast.fire({ icon: 'error', title: {!! json_encode(session('error')) !!} });
+    @endif
+</script>
+</body>
 </html>

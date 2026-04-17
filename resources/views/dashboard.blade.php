@@ -15,7 +15,7 @@
             <p>Aquí tienes un resumen de tus automatizaciones</p>
         </div>
         <div class="af-page-header__actions">
-            <a href="{{ route('automations.create') }}" class="af-btn af-btn--primary">
+            <a href="{{ route('automations.index') }}?new=1" class="af-btn af-btn--primary">
                 <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -164,7 +164,7 @@
                             </div>
                             <h3>Sin automatizaciones aún</h3>
                             <p>Crea tu primera automatización para empezar a ahorrar tiempo</p>
-                            <a href="{{ route('automations.create') }}" class="af-btn af-btn--primary af-btn--sm">
+                            <a href="{{ route('automations.index') }}?new=1" class="af-btn af-btn--primary af-btn--sm">
                                 Crear automatización
                             </a>
                         </div>
@@ -246,7 +246,7 @@
                 <div class="af-card__body">
                     <div class="af-quick-actions">
 
-                        <a href="{{ route('automations.create') }}" class="af-quick-action">
+                        <a href="{{ route('automations.index') }}?new=1" class="af-quick-action">
                             <div class="af-quick-action__icon">
                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
