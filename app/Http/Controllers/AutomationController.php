@@ -128,4 +128,49 @@ class AutomationController extends Controller
 
         return back()->with('success', "Automatización {$estado} correctamente.");
     }
+
+
+    /**
+     * 1. Busca automatización del usuario
+     * Verifica si está activa
+     * Decide qué acción ejecutar (IA, email, webhook)
+     * Simula ejecución
+     * Guarda log en base de datos
+     * Devuelve respuesta al frontend 
+     */
+    public function run($id)
+    {
+        $automation = Automation::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        if (! $automation->active) {
+            return response()->json([
+                'message' => '❌ Automatización inactiva'
+            ], 400);
+        }
+
+        //  MOTOR BÁSICO
+        $result = match ($automation->action_type ?? 'ia') {
+
+            'ia' => "🤖 IA ejecutada para: {$automation->name}",
+
+            'email' => "📧 Email simulado enviado",
+
+            'webhook' => "🔗 Webhook ejecutado",
+
+            default => "⚙️ Acción no definida"
+        };
+
+        //  LOG DE EJECUCIÓN (IMPORTANTE)
+        Execution::create([
+            'automation_id' => $automation->id,
+            'event_key' => 'manual_' . time(),
+            'status' => 'completed',
+        ]);
+
+        return response()->json([
+            'message' => $result
+        ]);
+    }
 }

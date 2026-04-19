@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('automations', AutomationController::class);
     Route::patch('automations/{automation}/toggle', [AutomationController::class, 'toggle'])
         ->name('automations.toggle');
+    Route::post(
+        'automations/run/{id}',
+        [AutomationController::class, 'run']
+    )->name('automations.run');
 });
 
 require __DIR__ . '/auth.php';
