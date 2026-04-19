@@ -150,7 +150,18 @@ class AutomationController extends Controller
             ], 400);
         }
 
-        //  MOTOR BÁSICO
+        // 🧠 ANTI-REPETICIÓN (NUEVO)
+        $lastExecution = Execution::where('automation_id', $automation->id)
+            ->latest()
+            ->first();
+
+        if ($lastExecution && $lastExecution->created_at->diffInSeconds(now()) < 30) {
+            return response()->json([
+                'message' => ' Esta automatización se ejecutó hace poco'
+            ], 429);
+        }
+
+        // MOTOR BÁSICO
         $result = match ($automation->action_type ?? 'ia') {
 
             'ia' => "🤖 IA ejecutada para: {$automation->name}",
@@ -162,7 +173,7 @@ class AutomationController extends Controller
             default => "⚙️ Acción no definida"
         };
 
-        //  LOG DE EJECUCIÓN (IMPORTANTE)
+        // LOG DE EJECUCIÓN
         Execution::create([
             'automation_id' => $automation->id,
             'event_key' => 'manual_' . time(),
