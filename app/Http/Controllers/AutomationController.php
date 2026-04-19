@@ -176,8 +176,10 @@ class AutomationController extends Controller
         // LOG DE EJECUCIÓN
         Execution::create([
             'automation_id' => $automation->id,
-            'event_key' => 'manual_' . time(),
             'status' => 'completed',
+            'attempt' => 1,
+            'started_at' => now(),
+            'finished_at' => now(),
         ]);
 
         return response()->json([

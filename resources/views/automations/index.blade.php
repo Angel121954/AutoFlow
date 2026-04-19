@@ -143,10 +143,6 @@
                 </div>
             </div>
             <div class="af-automation-card__flow">
-                <span class="af-flow-step">
-                    ⚡ {{ ucfirst($automation->trigger_type) }}
-                </span>
-
                 <span class="af-flow-arrow">→</span>
 
                 <button class="af-btn af-btn--primary af-btn--sm"
