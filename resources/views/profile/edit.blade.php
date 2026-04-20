@@ -2,10 +2,11 @@
 
     @push('styles')
         <link rel="stylesheet" href="{{ asset('css/app/automations.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app/profile.css') }}">
     @endpush
 
     @slot('breadcrumb')
-        <a href="{{ route('dashboard') }}" style="text-decoration: none; color: var(--af-text-muted);">Inicio</a>
+        <a href="{{ route('dashboard') }}" class="af-breadcrumb-link">Inicio</a>
         <span>›</span>
         <strong>Mi Perfil</strong>
     @endslot
@@ -17,17 +18,14 @@
         </div>
     </div>
 
-    <div style="max-width: 700px; display: flex; flex-direction: column; gap: 20px;">
-
-        {{-- ── Información del perfil ── --}}
+    <div class="af-profile-container">
         @include('profile.partials.update-profile-information-form')
-
-        {{-- ── Cambiar contraseña ── --}}
         @include('profile.partials.update-password-form')
-
-        {{-- ── Eliminar cuenta ── --}}
         @include('profile.partials.delete-user-form')
-
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('js/app/profile.js') }}"></script>
+    @endpush
 
 </x-app-layout>

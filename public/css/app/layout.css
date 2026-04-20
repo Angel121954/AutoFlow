@@ -355,3 +355,30 @@
     .af-page-header__actions { width: 100%; }
     .af-page-header__actions .af-btn { flex: 1; justify-content: center; }
 }
+
+/* ── Alertas flash en el área de contenido ── */
+.af-content > .af-alert {
+    margin-bottom : 20px;
+}
+.af-alert svg {
+    flex-shrink : 0;
+}
+
+/* ── Breadcrumb link activo ── */
+.af-breadcrumb-link--active {
+    color           : var(--af-text-dark);
+    font-weight     : 600;
+    text-decoration : none;
+}
+
+/* ── Dropdown hacia arriba (sidebar footer) ── */
+.af-dropdown__menu--above {
+    bottom : calc(100% + 8px);
+    top    : auto;
+    width  : 100%;
+}
+
+/* ── Utilidad: oculto por defecto (controlado por JS) ── */
+.af-hidden {
+    display : none !important;
+}

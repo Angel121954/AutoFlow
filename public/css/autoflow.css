@@ -369,3 +369,7 @@ body {
     clip: rect(0,0,0,0);
     border: 0;
 }
+
+/* ── Clases utilitarias de texto ── */
+.af-text-placeholder { color: var(--af-text-placeholder); }
+.af-text-muted       { color: var(--af-text-muted); }

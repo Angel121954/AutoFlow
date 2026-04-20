@@ -1,0 +1,76 @@
+/* =============================================
+   AutoFlow — Profile
+   Página de perfil de usuario
+   ============================================= */
+
+/* ── Contenedor de perfil ── */
+.af-profile-container {
+    max-width      : 700px;
+    display        : flex;
+    flex-direction : column;
+    gap            : 20px;
+}
+
+/* ── Fila del avatar ── */
+.af-profile-avatar-row {
+    display       : flex;
+    align-items   : center;
+    gap           : 16px;
+    margin-bottom : 24px;
+    padding-bottom: 20px;
+    border-bottom : 1px solid var(--af-border-light);
+}
+.af-profile-name {
+    font-size     : 0.875rem;
+    font-weight   : 600;
+    color         : var(--af-text-dark);
+    margin-bottom : 2px;
+}
+.af-profile-since {
+    font-size : 0.8rem;
+    color     : var(--af-text-muted);
+}
+
+/* ── Formulario inline (para el botón de reenvío) ── */
+.af-form--inline {
+    display : inline;
+}
+
+/* ── Botón link con color de advertencia ── */
+.af-btn-link--warning {
+    background      : none;
+    border          : none;
+    padding         : 0;
+    color           : var(--af-warning-text);
+    font-weight     : 600;
+    cursor          : pointer;
+    font-family     : inherit;
+    font-size       : inherit;
+    text-decoration : underline;
+}
+.af-btn-link--warning:hover {
+    opacity : 0.8;
+}
+
+/* ── Modificadores de alerta ── */
+.af-alert--mt    { margin-top : 10px; }
+.af-alert--mt-sm { margin-top : 8px; }
+.af-alert--mb    { margin-bottom: 18px; }
+
+/* ── Badge con padding mayor ── */
+.af-badge--md {
+    padding : 6px 12px;
+}
+
+/* ── Modificador de campo sin margen inferior ── */
+.af-field--no-mb {
+    margin-bottom : 0;
+}
+
+/* ── Confirmación de eliminación (oculta por defecto) ── */
+.af-delete-confirm {
+    display : none;
+}
+.af-delete-confirm.is-visible {
+    display : block;
+}

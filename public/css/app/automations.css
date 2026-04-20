@@ -1,319 +1,474 @@
 /* =============================================
    AutoFlow — Automations
+   Grid, tarjetas, detalle y formularios
    ============================================= */
 
-/* ── Filtros y búsqueda ── */
+/* ── Filtros ── */
 .af-filters {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
+    display     : flex;
+    align-items : center;
+    gap         : 12px;
+    margin-bottom: 20px;
+    flex-wrap   : wrap;
 }
 .af-search-box {
-    position: relative;
-    flex: 1;
+    position : relative;
+    flex     : 1;
     min-width: 200px;
-    max-width: 340px;
-}
-.af-search-box input {
-    padding-left: 40px;
 }
 .af-search-box__icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--af-text-placeholder);
-    pointer-events: none;
+    position       : absolute;
+    left           : 13px;
+    top            : 50%;
+    transform      : translateY(-50%);
+    color          : #94a3b8;
+    pointer-events : none;
 }
 .af-filter-pills {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+    display : flex;
+    gap     : 6px;
 }
 .af-filter-pill {
-    padding: 6px 14px;
-    border-radius: var(--af-radius-full);
-    font-size: 0.8rem;
-    font-weight: 600;
-    border: 1.5px solid var(--af-border);
-    background: var(--af-bg-card);
-    color: var(--af-text-muted);
-    cursor: pointer;
-    transition: all var(--af-transition);
+    padding       : 7px 14px;
+    border-radius : 9999px;
+    border        : 1.5px solid var(--af-border);
+    background    : var(--af-bg-card);
+    font-size     : 0.825rem;
+    font-weight   : 500;
+    color         : var(--af-text-muted);
+    cursor        : pointer;
+    transition    : all 0.18s;
+    font-family   : var(--af-font);
 }
-.af-filter-pill:hover,
+.af-filter-pill:hover {
+    border-color : var(--af-primary);
+    color        : var(--af-primary);
+}
 .af-filter-pill--active {
-    border-color: var(--af-primary);
-    background: var(--af-primary-lighter);
-    color: var(--af-primary);
+    background   : var(--af-primary);
+    border-color : var(--af-primary);
+    color        : #fff;
 }
 
-/* ── Grid de tarjetas de automatización ── */
+/* ── Grid de automatizaciones ── */
 .af-automations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    display               : grid;
+    grid-template-columns : repeat(auto-fill, minmax(320px, 1fr));
+    gap                   : 16px;
 }
 
 /* ── Tarjeta de automatización ── */
 .af-automation-card {
-    background: var(--af-bg-card);
-    border: 1px solid var(--af-border);
-    border-radius: var(--af-radius-lg);
-    box-shadow: var(--af-shadow-sm);
-    transition: box-shadow var(--af-transition), transform var(--af-transition), border-color var(--af-transition);
-    overflow: hidden;
-    display: flex;
+    background    : var(--af-bg-card);
+    border        : 1px solid var(--af-border);
+    border-radius : var(--af-radius-lg);
+    box-shadow    : var(--af-shadow-sm);
+    transition    : box-shadow 0.18s, transform 0.18s;
+    display       : flex;
     flex-direction: column;
 }
 .af-automation-card:hover {
-    box-shadow: var(--af-shadow);
-    transform: translateY(-2px);
-    border-color: #d1d5db;
+    box-shadow : var(--af-shadow);
+    transform  : translateY(-1px);
 }
 
 .af-automation-card__header {
-    padding: 18px 18px 14px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
+    padding         : 18px 18px 14px;
+    display         : flex;
+    align-items     : flex-start;
+    justify-content : space-between;
+    gap             : 12px;
 }
 .af-automation-card__title-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    flex: 1;
-    min-width: 0;
+    display     : flex;
+    align-items : flex-start;
+    gap         : 12px;
+    flex        : 1;
+    min-width   : 0;
 }
-.af-automation-card__trigger-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: var(--af-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1.1rem;
-}
-.af-automation-card__trigger-icon--email   { background: #fef3c7; color: #d97706; }
-.af-automation-card__trigger-icon--whatsapp{ background: #dcfce7; color: #16a34a; }
-.af-automation-card__trigger-icon--registro{ background: var(--af-primary-lighter); color: var(--af-primary); }
-.af-automation-card__trigger-icon--pago    { background: #f3e8ff; color: #9333ea; }
-.af-automation-card__trigger-icon--default { background: var(--af-bg); color: var(--af-text-muted); }
 
-.af-automation-card__info { flex: 1; min-width: 0; }
+/* Icono del trigger */
+.af-automation-card__trigger-icon {
+    width           : 40px;
+    height          : 40px;
+    border-radius   : 10px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    font-size       : 1.1rem;
+    flex-shrink     : 0;
+}
+.af-automation-card__trigger-icon--email    { background: #fef3c7; }
+.af-automation-card__trigger-icon--whatsapp { background: #dcfce7; }
+.af-automation-card__trigger-icon--registro { background: #dbeafe; }
+.af-automation-card__trigger-icon--pago     { background: #f3e8ff; }
+.af-automation-card__trigger-icon--webhook  { background: #e0f2fe; }
+.af-automation-card__trigger-icon--schedule { background: #fce7f3; }
+.af-automation-card__trigger-icon--default  { background: var(--af-bg); }
+
+/* Icono grande (vista detalle) */
+.af-trigger-icon--lg {
+    width       : 52px !important;
+    height      : 52px !important;
+    font-size   : 1.5rem !important;
+    border-radius: var(--af-radius) !important;
+}
+
+.af-automation-card__info {
+    flex      : 1;
+    min-width : 0;
+}
 .af-automation-card__name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--af-text-dark);
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size     : 0.9rem;
+    font-weight   : 700;
+    color         : var(--af-text-dark);
+    margin-bottom : 4px;
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
 }
 .af-automation-card__desc {
-    font-size: 0.8rem;
-    color: var(--af-text-muted);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size : 0.8rem;
+    color     : var(--af-text-muted);
+    overflow  : hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.af-automation-card__desc--empty {
+    color      : var(--af-text-placeholder);
+    font-style : italic;
 }
 
-/* Toggle de activo */
-.af-automation-card__toggle { flex-shrink: 0; margin-top: 2px; }
+.af-automation-card__toggle { flex-shrink: 0; }
 
-/* Footer de la tarjeta */
 .af-automation-card__footer {
-    padding: 12px 18px;
-    border-top: 1px solid var(--af-border-light);
-    background: var(--af-bg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    padding         : 12px 18px 16px;
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    gap             : 10px;
+    border-top      : 1px solid var(--af-border-light);
+    margin-top      : auto;
 }
 .af-automation-card__meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display     : flex;
+    align-items : center;
+    gap         : 6px;
+    flex-wrap   : wrap;
 }
 .af-automation-card__actions {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    display     : flex;
+    align-items : center;
+    gap         : 4px;
+    flex-shrink : 0;
 }
 .af-automation-card__action-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    border: none;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--af-text-placeholder);
-    cursor: pointer;
-    text-decoration: none;
-    transition: background var(--af-transition), color var(--af-transition);
+    width           : 30px;
+    height          : 30px;
+    border-radius   : 6px;
+    border          : none;
+    background      : transparent;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    color           : var(--af-text-muted);
+    cursor          : pointer;
+    transition      : background 0.18s, color 0.18s;
+    text-decoration : none;
 }
-.af-automation-card__action-btn:hover { background: var(--af-border-light); color: var(--af-text-dark); }
-.af-automation-card__action-btn--danger:hover { background: var(--af-danger-light); color: var(--af-danger); }
-
-/* ── Formulario de crear/editar ── */
-.af-form-page { max-width: 680px; }
-
-.af-form-section {
-    background: var(--af-bg-card);
-    border: 1px solid var(--af-border);
-    border-radius: var(--af-radius-lg);
-    margin-bottom: 20px;
-    overflow: hidden;
-    box-shadow: var(--af-shadow-sm);
+.af-automation-card__action-btn:hover {
+    background : var(--af-bg);
+    color      : var(--af-text-dark);
 }
-.af-form-section__header {
-    padding: 16px 22px;
-    border-bottom: 1px solid var(--af-border-light);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.af-form-section__title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--af-text-dark);
-}
-.af-form-section__step {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--af-primary);
-    color: #fff;
-    font-size: 0.725rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.af-form-section__body {
-    padding: 22px;
+.af-automation-card__action-btn--danger:hover {
+    background : var(--af-danger-light);
+    color      : var(--af-danger);
 }
 
-/* Selector de trigger */
-.af-trigger-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    margin-top: 4px;
-}
-.af-trigger-option {
-    border: 1.5px solid var(--af-border);
-    border-radius: var(--af-radius);
-    padding: 14px 12px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
-    transition: all var(--af-transition);
-    background: var(--af-bg-card);
-}
-.af-trigger-option:hover {
-    border-color: var(--af-primary);
-    background: var(--af-primary-lighter);
-}
-.af-trigger-option.selected,
-.af-trigger-option input:checked + label,
-.af-trigger-option--selected {
-    border-color: var(--af-primary);
-    background: var(--af-primary-lighter);
-}
-.af-trigger-option input[type="radio"] { display: none; }
-.af-trigger-option__emoji { font-size: 1.6rem; }
-.af-trigger-option__label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--af-text-medium);
-}
-
-/* Acciones del formulario */
-.af-form-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-top: 4px;
-}
-
-/* ── Vista de detalle (show) ── */
+/* ── Vista detalle de automatización ── */
 .af-detail-header {
-    background: var(--af-bg-card);
-    border: 1px solid var(--af-border);
-    border-radius: var(--af-radius-lg);
-    padding: 24px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--af-shadow-sm);
+    display         : flex;
+    align-items     : flex-start;
+    justify-content : space-between;
+    gap             : 20px;
+    margin-bottom   : 24px;
+    flex-wrap       : wrap;
 }
 .af-detail-header__left {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
+    display     : flex;
+    align-items : flex-start;
+    gap         : 16px;
+    flex        : 1;
+    min-width   : 0;
 }
 .af-detail-header__title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--af-text-dark);
-    margin: 0 0 6px;
+    font-size      : 1.35rem;
+    font-weight    : 700;
+    color          : var(--af-text-dark);
+    margin         : 0 0 8px;
+    letter-spacing : -0.3px;
 }
 .af-detail-header__meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    display     : flex;
+    align-items : center;
+    gap         : 8px;
+    flex-wrap   : wrap;
+}
+.af-detail-header__date {
+    font-size : 0.8rem;
+    color     : var(--af-text-muted);
+}
+.af-detail-header__desc {
+    margin      : 10px 0 0;
+    font-size   : 0.875rem;
+    color       : var(--af-text-muted);
+    max-width   : 480px;
+    line-height : 1.5;
 }
 .af-detail-header__actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
+    display     : flex;
+    align-items : center;
+    gap         : 8px;
+    flex-shrink : 0;
 }
 
+/* Grid de detalle (main + sidebar) */
 .af-detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 20px;
-    align-items: start;
+    display               : grid;
+    grid-template-columns : 1fr 300px;
+    gap                   : 20px;
+    align-items           : start;
 }
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .af-detail-grid { grid-template-columns: 1fr; }
 }
 
-/* Línea de tiempo de ejecuciones */
-.af-executions-list { display: flex; flex-direction: column; }
+.af-detail-col {
+    display        : flex;
+    flex-direction : column;
+    gap            : 16px;
+}
+
+/* ── Ítems de ejecución ── */
 .af-execution-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--af-border-light);
+    display       : flex;
+    align-items   : flex-start;
+    gap           : 14px;
+    padding       : 16px 0;
+    border-bottom : 1px solid var(--af-border-light);
 }
 .af-execution-item:last-child { border-bottom: none; }
+
 .af-execution-status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-top: 5px;
-    flex-shrink: 0;
+    width         : 10px;
+    height        : 10px;
+    border-radius : 50%;
+    flex-shrink   : 0;
+    margin-top    : 5px;
 }
 .af-execution-status-dot--success { background: var(--af-success); }
 .af-execution-status-dot--error   { background: var(--af-danger); }
 .af-execution-status-dot--pending { background: var(--af-warning); }
+
+.af-execution-item__info {
+    flex      : 1;
+    min-width : 0;
+}
+.af-execution-item__title {
+    font-size     : 0.875rem;
+    font-weight   : 600;
+    color         : var(--af-text-dark);
+    margin-bottom : 2px;
+}
+.af-execution-item__message {
+    font-size : 0.8rem;
+    color     : var(--af-text-muted);
+}
+.af-execution-item__time {
+    text-align  : right;
+    flex-shrink : 0;
+}
+.af-execution-item__time-text {
+    font-size : 0.775rem;
+    color     : var(--af-text-placeholder);
+}
+.af-execution-item__duration {
+    font-size  : 0.725rem;
+    color      : var(--af-text-placeholder);
+    margin-top : 2px;
+}
+
+/* ── Modificadores de card para danger ── */
+.af-card--danger {
+    border-color : var(--af-danger-light);
+}
+.af-card__header--danger {
+    background : var(--af-danger-light);
+}
+.af-card__title--danger {
+    font-size   : 0.875rem;
+    font-weight : 700;
+    color       : var(--af-danger);
+    margin      : 0;
+}
+.af-card__desc {
+    font-size   : 0.8rem;
+    color       : var(--af-text-muted);
+    margin      : 0 0 14px;
+    line-height : 1.5;
+}
+.af-card__body--px-only {
+    padding-top    : 0;
+    padding-bottom : 0;
+}
+
+/* ── Empty state compacto ── */
+.af-empty-state--compact {
+    padding : 40px 0;
+}
+
+/* ── Empty state de página completa ── */
+.af-empty-page {
+    border        : 1px solid #e2e8f0;
+    border-radius : 16px;
+    background    : #ffffff;
+    padding       : 72px 40px;
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    text-align    : center;
+}
+.af-empty-page__icon {
+    width           : 72px;
+    height          : 72px;
+    border-radius   : 20px;
+    background      : #eff6ff;
+    border          : 1px solid #bfdbfe;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    margin-bottom   : 24px;
+}
+.af-empty-page h3 {
+    font-size   : 1.2rem;
+    font-weight : 700;
+    color       : #0f172a;
+    margin      : 0 0 10px;
+}
+.af-empty-page p {
+    font-size   : 0.9rem;
+    color       : #64748b;
+    margin      : 0 0 32px;
+    max-width   : 400px;
+    line-height : 1.7;
+}
+
+/* ── Lista de detalles (dl) ── */
+.af-details-list {
+    display        : flex;
+    flex-direction : column;
+    gap            : 14px;
+    margin         : 0;
+}
+.af-details-list dt {
+    font-size      : 0.75rem;
+    font-weight    : 600;
+    color          : var(--af-text-muted);
+    text-transform : uppercase;
+    letter-spacing : 0.04em;
+    margin-bottom  : 4px;
+}
+.af-details-list dd {
+    font-size   : 0.875rem;
+    color       : var(--af-text-dark);
+    font-weight : 500;
+    margin      : 0;
+}
+.af-details-list dd.af-details-list__badge {
+    font-weight : 400;
+}
+
+/* ── Secciones de formulario ── */
+.af-form-section {
+    background    : var(--af-bg-card);
+    border        : 1px solid var(--af-border);
+    border-radius : var(--af-radius-lg);
+    box-shadow    : var(--af-shadow-sm);
+    overflow      : hidden;
+}
+.af-form-section--danger {
+    border-color : var(--af-danger-light);
+}
+.af-form-section__header {
+    display     : flex;
+    align-items : center;
+    gap         : 12px;
+    padding     : 16px 20px;
+    background  : var(--af-bg);
+    border-bottom: 1px solid var(--af-border-light);
+}
+.af-form-section__header--danger {
+    background : var(--af-danger-light);
+}
+.af-form-section__step {
+    width           : 28px;
+    height          : 28px;
+    border-radius   : 50%;
+    background      : var(--af-primary);
+    color           : #fff;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    font-size       : 0.8rem;
+    font-weight     : 700;
+    flex-shrink     : 0;
+}
+.af-form-section__step--danger {
+    background : var(--af-danger);
+}
+.af-form-section__title {
+    font-size   : 0.9rem;
+    font-weight : 700;
+    color       : var(--af-text-dark);
+}
+.af-form-section__title--danger {
+    color : var(--af-danger);
+}
+.af-form-section__body {
+    padding : 20px;
+}
+.af-form-section__desc {
+    font-size   : 0.875rem;
+    color       : var(--af-text-muted);
+    line-height : 1.6;
+    margin      : 0 0 20px;
+}
+
+/* ── Acciones de formulario ── */
+.af-form-actions {
+    display     : flex;
+    align-items : center;
+    gap         : 12px;
+    padding-top : 16px;
+    border-top  : 1px solid var(--af-border-light);
+}
+.af-form-actions--start {
+    justify-content : flex-start;
+    padding-top     : 0;
+    border-top      : none;
+}
+
+/* ── Grupo de botones ── */
+.af-btn-group {
+    display     : flex;
+    align-items : center;
+    gap         : 10px;
+}
+
+/* ── Breadcrumb links ── */
+.af-breadcrumb-link {
+    text-decoration : none;
+    color           : var(--af-text-muted);
+    transition      : color 0.18s;
+}
+.af-breadcrumb-link:hover { color: var(--af-text-dark); }

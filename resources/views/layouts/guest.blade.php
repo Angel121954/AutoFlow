@@ -8,7 +8,7 @@
 
     <title>{{ $title ?? config('app.name', 'AutoFlow') }}</title>
 
-    {{-- Fuente principal --}}
+    {{-- Fuente --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,20 +17,18 @@
     <link rel="stylesheet" href="{{ asset('css/autoflow.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
 
-    {{-- Tailwind/Vite (utilidades de apoyo) --}}
+    {{-- Tailwind / Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Estilos adicionales por vista --}}
+    {{-- Hojas adicionales por vista --}}
     @stack('styles')
 </head>
 
 <body>
     <div class="af-auth-screen">
 
-        {{-- ── Panel izquierdo decorativo (visible en desktop) ── --}}
+        {{-- ── Panel izquierdo decorativo ── --}}
         <div class="af-auth-panel">
-
-            {{-- Logo blanco --}}
             <div class="af-auth-panel__brand">
                 <span class="af-logo-icon">
                     <span class="af-logo-sq af-logo-sq-1 af-logo-sq--white-1"></span>
@@ -40,16 +38,11 @@
                 <span class="af-auth-panel__brand-text">AutoFlow</span>
             </div>
 
-            {{-- Headline central --}}
             <div class="af-auth-panel__headline">
                 <h2>Automatiza.<br>Escala.<br>Crece.</h2>
-                <p>
-                    Conecta tus procesos de negocio y elimina el trabajo manual
-                    con automatizaciones inteligentes en minutos.
-                </p>
+                <p>Conecta tus procesos de negocio y elimina el trabajo manual con automatizaciones inteligentes en minutos.</p>
             </div>
 
-            {{-- Feature list --}}
             <div class="af-auth-panel__features">
                 <div class="af-auth-panel__feature">
                     <div class="af-auth-panel__feature-icon">
@@ -82,7 +75,7 @@
         <div class="af-auth-form-area">
             <div class="af-auth-card">
 
-                {{-- Logo móvil (se oculta en desktop donde el panel ya lo muestra) --}}
+                {{-- Logo móvil --}}
                 <div class="af-auth-logo">
                     <span class="af-logo-icon">
                         <span class="af-logo-sq af-logo-sq-1"></span>
@@ -94,8 +87,8 @@
 
                 {{-- Alertas de sesión --}}
                 @if (session('status'))
-                    <div class="af-alert af-alert--success" style="margin-bottom: 20px;">
-                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0">
+                    <div class="af-alert af-alert--success">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                         </svg>
                         {{ session('status') }}
@@ -103,15 +96,14 @@
                 @endif
 
                 @if (session('error'))
-                    <div class="af-alert af-alert--danger" style="margin-bottom: 20px;">
-                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0">
+                    <div class="af-alert af-alert--danger">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         {{ session('error') }}
                     </div>
                 @endif
 
-                {{-- Contenido de la vista --}}
                 {{ $slot }}
             </div>
         </div>

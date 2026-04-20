@@ -32,8 +32,12 @@
             <svg class="af-search-box__icon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-            <input type="search" placeholder="Buscar automatización..." class="af-input"
-                   id="af-search-input" oninput="filterAutomations()" style="padding-left:40px;"/>
+            <input type="search"
+                   placeholder="Buscar automatización..."
+                   class="af-input"
+                   id="af-search-input"
+                   oninput="filterAutomations()"
+                   style="padding-left:40px;"/>
         </div>
         <div class="af-filter-pills">
             <button class="af-filter-pill af-filter-pill--active" onclick="setFilter('all', this)">Todas</button>
@@ -53,47 +57,14 @@
 
     {{-- ══ Grid de tarjetas ══ --}}
     @if ($automations->isEmpty())
-        <div style="
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            background: #ffffff;
-            padding: 72px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        ">
-            <div style="
-                width: 72px; height: 72px;
-                border-radius: 20px;
-                background: #eff6ff;
-                border: 1px solid #bfdbfe;
-                display: flex; align-items: center; justify-content: center;
-                margin-bottom: 24px;
-            ">
-                <svg width="32" height="32" fill="none" viewBox="0 0 24 24"
-                     stroke="#2563eb" stroke-width="1.6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        <div class="af-empty-page">
+            <div class="af-empty-page__icon">
+                <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="1.6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
             </div>
-
-            <h3 style="font-size:1.2rem;font-weight:700;color:#0f172a;margin:0 0 10px;">
-                Sin automatizaciones aún
-            </h3>
-            <p style="font-size:.9rem;color:#64748b;margin:0 0 32px;max-width:400px;line-height:1.7;">
-                Crea tu primera automatización y empieza a ahorrar tiempo
-                en tus procesos de negocio de forma inteligente.
-            </p>
-
-            <button class="af-btn af-btn--primary" onclick="openCreateModal()"
-                    style="padding:11px 24px;font-size:.9rem;">
-                <svg width="15" height="15" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                </svg>
-                Crear primera automatización
-            </button>
+            <h3>Sin automatizaciones aún</h3>
+            <p>Crea tu primera automatización y empieza a ahorrar tiempo en tus procesos de negocio de forma inteligente.</p>
         </div>
     @else
         <div class="af-automations-grid" id="af-automations-grid">
@@ -123,7 +94,7 @@
                             @if ($automation->description)
                                 <div class="af-automation-card__desc">{{ $automation->description }}</div>
                             @else
-                                <div class="af-automation-card__desc" style="color:var(--af-text-placeholder); font-style:italic;">
+                                <div class="af-automation-card__desc af-automation-card__desc--empty">
                                     Sin descripción
                                 </div>
                             @endif
@@ -188,7 +159,8 @@
                         </form>
 
                         {{-- Eliminar → SweetAlert2 confirm --}}
-                        <button class="af-automation-card__action-btn af-automation-card__action-btn--danger" title="Eliminar"
+                        <button class="af-automation-card__action-btn af-automation-card__action-btn--danger"
+                                title="Eliminar"
                                 onclick="confirmDelete({{ $automation->id }}, {{ json_encode($automation->name) }})">
                             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -208,231 +180,61 @@
         @endif
     @endif
 
-    {{-- ══════════════════════════════════════════════════════
-         COMPONENTE: Modal Crear / Editar Automatización
-         → resources/views/components/automation-modal.blade.php
-    ══════════════════════════════════════════════════════ --}}
+    {{-- Componente modal --}}
     <x-automation-modal />
 
     @push('scripts')
-    <script>
-        /* ══════════════════════════════════════
-           FILTROS
-        ══════════════════════════════════════ */
-        let currentFilter  = 'all';
-        let currentTrigger = '';
+        {{-- Rutas PHP expuestas al JS estático --}}
+        <script>
+            window.AfRoutes = {
+                automationsStore: '{{ route('automations.store') }}'
+            };
+        </script>
 
-        function filterAutomations() { applyFilters(); }
+        {{-- Lógica de automatizaciones (filtros, modal, delete) --}}
+        <script src="{{ asset('js/app/automations.js') }}"></script>
 
-        function setFilter(status, btn) {
-            currentFilter = status;
-            document.querySelectorAll('.af-filter-pill')
-                .forEach(p => p.classList.remove('af-filter-pill--active'));
-            btn.classList.add('af-filter-pill--active');
-            applyFilters();
-        }
-
-        function filterByTrigger(val) { currentTrigger = val; applyFilters(); }
-
-        function applyFilters() {
-            const q = (document.getElementById('af-search-input').value || '').toLowerCase();
-            document.querySelectorAll('.af-automation-card').forEach(card => {
-                const matchSearch  = !q || (card.dataset.name || '').includes(q);
-                const matchStatus  = currentFilter === 'all' || card.dataset.status === currentFilter;
-                const matchTrigger = !currentTrigger || card.dataset.trigger === currentTrigger;
-                card.style.display = (matchSearch && matchStatus && matchTrigger) ? '' : 'none';
-            });
-        }
-
-        /* ══════════════════════════════════════
-           MODAL — abrir / cerrar
-        ══════════════════════════════════════ */
-        let _modalOpen = false;
-
-        function openModal() {
-            document.getElementById('af-automation-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-            _modalOpen = true;
-        }
-
-        function closeModal() {
-            document.getElementById('af-automation-modal').classList.remove('open');
-            document.body.style.overflow = '';
-            _modalOpen = false;
-        }
-
-        function handleBackdropClick(e) {
-            if (e.target === document.getElementById('af-automation-modal')) closeModal();
-        }
-
-        /* ══════════════════════════════════════
-           MODAL — CREAR
-        ══════════════════════════════════════ */
-        function openCreateModal() {
-            // Configurar acción del form
-            document.getElementById('af-automation-form').action = '{{ route('automations.store') }}';
-            document.getElementById('af-form-method').value = 'POST';
-            document.getElementById('af-editing-id').value  = '';
-
-            // Limpiar campos
-            document.getElementById('modal-name').value        = '';
-            document.getElementById('modal-description').value = '';
-            document.getElementById('modal-active').checked    = true;
-            clearTriggerSelection();
-
-            // Textos del modal
-            document.getElementById('af-modal-title').textContent        = 'Nueva automatización';
-            document.getElementById('af-modal-subtitle').textContent     = 'Configura un flujo automático para tu negocio';
-            document.getElementById('af-modal-submit-text').textContent  = 'Crear automatización';
-            document.getElementById('af-modal-status-label').textContent = 'Estado inicial';
-            document.getElementById('af-modal-status-title').textContent = 'Activar al crear';
-            document.getElementById('af-modal-status-desc').textContent  = 'La automatización comenzará a ejecutarse inmediatamente';
-
-            // Ícono: +
-            document.getElementById('af-modal-icon').innerHTML = `
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                </svg>`;
-
-            openModal();
-            setTimeout(() => document.getElementById('modal-name').focus(), 150);
-        }
-
-        /* ══════════════════════════════════════
-           MODAL — EDITAR
-        ══════════════════════════════════════ */
-        function openEditModal(data) {
-            // Configurar acción del form
-            document.getElementById('af-automation-form').action = `/automations/${data.id}`;
-            document.getElementById('af-form-method').value = 'PUT';
-            document.getElementById('af-editing-id').value  = data.id;
-
-            // Pre-llenar campos con los datos de la automatización
-            document.getElementById('modal-name').value        = data.name;
-            document.getElementById('modal-description').value = data.description || '';
-            document.getElementById('modal-active').checked    = data.active;
-            setTriggerSelection(data.trigger_type);
-
-            // Textos del modal
-            document.getElementById('af-modal-title').textContent        = 'Editar automatización';
-            document.getElementById('af-modal-subtitle').textContent     = `Modificando «${data.name}»`;
-            document.getElementById('af-modal-submit-text').textContent  = 'Guardar cambios';
-            document.getElementById('af-modal-status-label').textContent = 'Estado de la automatización';
-            document.getElementById('af-modal-status-title').textContent = 'Automatización activa';
-            document.getElementById('af-modal-status-desc').textContent  = 'Desactiva temporalmente sin eliminar la configuración';
-
-            // Ícono: lápiz
-            document.getElementById('af-modal-icon').innerHTML = `
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                </svg>`;
-
-            openModal();
-            setTimeout(() => document.getElementById('modal-name').focus(), 150);
-        }
-
-        /* ══════════════════════════════════════
-           TRIGGER SELECTION
-        ══════════════════════════════════════ */
-        function clearTriggerSelection() {
-            document.querySelectorAll('#af-modal-trigger-grid .af-modal-trigger-option').forEach(opt => {
-                opt.classList.remove('af-modal-trigger-option--selected');
-                opt.querySelector('input[type="radio"]').checked = false;
-            });
-        }
-
-        function setTriggerSelection(value) {
-            clearTriggerSelection();
-            const target = document.querySelector(
-                `#af-modal-trigger-grid .af-modal-trigger-option[data-value="${value}"]`
-            );
-            if (target) {
-                target.classList.add('af-modal-trigger-option--selected');
-                target.querySelector('input[type="radio"]').checked = true;
-            }
-        }
-
-        function selectModalTrigger(el) {
-            clearTriggerSelection();
-            el.classList.add('af-modal-trigger-option--selected');
-            el.querySelector('input[type="radio"]').checked = true;
-        }
-
-        /* ══════════════════════════════════════
-           DELETE — SweetAlert2
-        ══════════════════════════════════════ */
-        function confirmDelete(id, name) {
-            Swal.fire({
-                title: '¿Eliminar automatización?',
-                html:  `La automatización <strong>«${name}»</strong> será eliminada permanentemente junto con todos sus registros de ejecución.`,
-                icon:  'warning',
-                showCancelButton:  true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText:  'Cancelar',
-                reverseButtons:    true,
-                focusCancel:       true,
-                customClass: {
-                    popup:         'af-swal-popup',
-                    confirmButton: 'af-swal-confirm',
-                    cancelButton:  'af-swal-cancel',
-                },
-                buttonsStyling: false,
-            }).then(result => {
-                if (result.isConfirmed) {
-                    document.getElementById(`delete-form-${id}`).submit();
-                }
-            });
-        }
-
-        /* ══════════════════════════════════════
-           REAPERTURA MODAL SI HAY ERRORES
-        ══════════════════════════════════════ */
-        @if ($errors->any())
-        document.addEventListener('DOMContentLoaded', () => {
-            @if (old('editing_id'))
-                openEditModal({
-                    id:           {{ (int) old('editing_id') }},
-                    name:         {!! json_encode(old('name', '')) !!},
-                    description:  {!! json_encode(old('description', '')) !!},
-                    trigger_type: {!! json_encode(old('trigger_type', '')) !!},
-                    active:       {{ old('active') ? 'true' : 'false' }},
+        {{-- Reapertura del modal cuando hay errores de validación o parámetros de URL --}}
+        <script>
+            @if ($errors->any())
+                document.addEventListener('DOMContentLoaded', () => {
+                    @if (old('editing_id'))
+                        openEditModal({
+                            id:           {{ (int) old('editing_id') }},
+                            name:         {!! json_encode(old('name', '')) !!},
+                            description:  {!! json_encode(old('description', '')) !!},
+                            trigger_type: {!! json_encode(old('trigger_type', '')) !!},
+                            active:       {{ old('active') ? 'true' : 'false' }},
+                        });
+                    @else
+                        openCreateModal();
+                        document.getElementById('modal-name').value        = {!! json_encode(old('name', '')) !!};
+                        document.getElementById('modal-description').value = {!! json_encode(old('description', '')) !!};
+                        @if (old('trigger_type'))
+                            setTriggerSelection({!! json_encode(old('trigger_type')) !!});
+                        @endif
+                    @endif
                 });
-            @else
-                openCreateModal();
-                document.getElementById('modal-name').value        = {!! json_encode(old('name', '')) !!};
-                document.getElementById('modal-description').value = {!! json_encode(old('description', '')) !!};
-                @if(old('trigger_type'))
-                setTriggerSelection({!! json_encode(old('trigger_type')) !!});
-                @endif
+            @elseif (request()->query('new'))
+                document.addEventListener('DOMContentLoaded', () => openCreateModal());
+            @elseif (request()->query('edit'))
+                document.addEventListener('DOMContentLoaded', () => {
+                    @php
+                        $editId   = (int) request()->query('edit');
+                        $editAuto = $automations->firstWhere('id', $editId);
+                    @endphp
+                    @if ($editAuto)
+                        openEditModal({
+                            id:           {{ $editAuto->id }},
+                            name:         {!! json_encode($editAuto->name) !!},
+                            description:  {!! json_encode($editAuto->description ?? '') !!},
+                            trigger_type: {!! json_encode($editAuto->trigger_type) !!},
+                            active:       {{ $editAuto->active ? 'true' : 'false' }},
+                        });
+                    @endif
+                });
             @endif
-        });
-        @elseif (request()->query('new'))
-        {{-- Viene de sidebar, dashboard o URL directa /automations/create --}}
-        document.addEventListener('DOMContentLoaded', () => openCreateModal());
-        @elseif (request()->query('edit'))
-        {{-- Viene de URL directa /automations/{id}/edit → abre modal de edición --}}
-        document.addEventListener('DOMContentLoaded', () => {
-            @php $editId = (int) request()->query('edit'); $editAuto = $automations->firstWhere('id', $editId); @endphp
-            @if ($editAuto)
-            openEditModal({
-                id:           {{ $editAuto->id }},
-                name:         {!! json_encode($editAuto->name) !!},
-                description:  {!! json_encode($editAuto->description ?? '') !!},
-                trigger_type: {!! json_encode($editAuto->trigger_type) !!},
-                active:       {{ $editAuto->active ? 'true' : 'false' }},
-            });
-            @endif
-        });
-        @endif
-
-        /* ══════════════════════════════════════
-           KEYBOARD
-        ══════════════════════════════════════ */
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && _modalOpen) closeModal();
-        });
-    </script>
+        </script>
     @endpush
 
 </x-app-layout>

@@ -219,3 +219,98 @@
     margin: 0 0 20px;
     max-width: 300px;
 }
+
+/* ── Columnas del grid dashboard ── */
+.af-dashboard-col {
+    display        : flex;
+    flex-direction : column;
+    gap            : 20px;
+}
+
+/* ── Títulos y subtítulos de tarjetas ── */
+.af-card__title {
+    font-size   : 0.95rem;
+    font-weight : 700;
+    color       : var(--af-text-dark);
+    margin      : 0 0 2px;
+}
+.af-card__subtitle {
+    font-size : 0.8rem;
+    color     : var(--af-text-muted);
+    margin    : 0;
+}
+
+/* ── Card body modifiers ── */
+.af-card__body--no-pt  { padding-top : 0; }
+.af-card__body--pt-sm  { padding-top : 8px; }
+
+/* ── Ítems de automatizaciones recientes ── */
+.af-recent-item {
+    display       : flex;
+    align-items   : center;
+    gap           : 14px;
+    padding       : 14px 0;
+    border-bottom : 1px solid var(--af-border-light);
+}
+.af-recent-item:last-child { border-bottom: none; }
+
+.af-recent-item__info {
+    flex      : 1;
+    min-width : 0;
+}
+.af-recent-item__name {
+    font-size     : 0.875rem;
+    font-weight   : 600;
+    color         : var(--af-text-dark);
+    margin-bottom : 2px;
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
+}
+.af-recent-item__meta {
+    font-size : 0.775rem;
+    color     : var(--af-text-muted);
+}
+
+/* ── Lista de tipos de trigger ── */
+.af-trigger-list {
+    display        : flex;
+    flex-direction : column;
+    gap            : 10px;
+}
+.af-trigger-item {
+    display         : flex;
+    align-items     : center;
+    gap             : 10px;
+    padding         : 10px;
+    border-radius   : var(--af-radius);
+    background      : var(--af-bg);
+}
+.af-trigger-item__icon {
+    width            : 34px;
+    height           : 34px;
+    border-radius    : 8px;
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    font-size        : 1rem;
+    flex-shrink      : 0;
+}
+.af-trigger-item__icon--email    { background: #fef3c7; }
+.af-trigger-item__icon--whatsapp { background: #dcfce7; }
+.af-trigger-item__icon--registro { background: #dbeafe; }
+.af-trigger-item__icon--pago     { background: #f3e8ff; }
+
+.af-trigger-item__info {
+    flex      : 1;
+    min-width : 0;
+}
+.af-trigger-item__label {
+    font-size   : 0.825rem;
+    font-weight : 600;
+    color       : var(--af-text-dark);
+}
+.af-trigger-item__desc {
+    font-size : 0.75rem;
+    color     : var(--af-text-muted);
+}
