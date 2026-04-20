@@ -150,40 +150,68 @@ class AutomationController extends Controller
             ], 400);
         }
 
-        // 🧠 ANTI-REPETICIÓN (NUEVO)
+        //  anti-spam
         $lastExecution = Execution::where('automation_id', $automation->id)
             ->latest()
             ->first();
 
         if ($lastExecution && $lastExecution->created_at->diffInSeconds(now()) < 30) {
             return response()->json([
-                'message' => ' Esta automatización se ejecutó hace poco'
+                'message' => 'Esta automatización se ejecutó hace poco'
             ], 429);
         }
 
-        // MOTOR BÁSICO
-        $result = match ($automation->action_type ?? 'ia') {
-
-            'ia' => "🤖 IA ejecutada para: {$automation->name}",
-
-            'email' => "📧 Email simulado enviado",
-
-            'webhook' => "🔗 Webhook ejecutado",
-
-            default => "⚙️ Acción no definida"
-        };
-
-        // LOG DE EJECUCIÓN
-        Execution::create([
+        //  1. CREAR EJECUCIÓN (PENDING)
+        $execution = Execution::create([
             'automation_id' => $automation->id,
-            'status' => 'completed',
+            'status' => 'pending',
             'attempt' => 1,
-            'started_at' => now(),
-            'finished_at' => now(),
+            'started_at' => null,
+            'finished_at' => null,
         ]);
 
-        return response()->json([
-            'message' => $result
-        ]);
+        try {
+
+            //  2. CAMBIAR A RUNNING
+            $execution->update([
+                'status' => 'processing',
+                'started_at' => now(),
+            ]);
+
+            //  MOTOR
+            $result = match ($automation->action_type ?? 'ia') {
+
+                'ia' => "🤖 IA ejecutada para: {$automation->name}",
+
+                'email' => "📧 Email simulado enviado",
+
+                'webhook' => "🔗 Webhook ejecutado",
+
+                default => "⚙️ Acción no definida"
+            };
+
+            //  3. COMPLETED
+            $execution->update([
+                'status' => 'completed',
+                'result' => $result,
+                'finished_at' => now(),
+            ]);
+
+            return response()->json([
+                'message' => $result
+            ]);
+        } catch (\Exception $e) {
+
+            //  FAILED
+            $execution->update([
+                'status' => 'failed',
+                'result' => $e->getMessage(),
+                'finished_at' => now(),
+            ]);
+
+            return response()->json([
+                'message' => '❌ Error en ejecución'
+            ], 500);
+        }
     }
 }

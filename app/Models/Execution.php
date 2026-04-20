@@ -13,11 +13,14 @@ class Execution extends Model
         'attempt',
         'started_at',
         'finished_at',
+        'result',
     ];
 
     protected $casts = [
         'started_at'  => 'datetime',
         'finished_at' => 'datetime',
+        'created_at'  => 'datetime',
+        'updated_at'  => 'datetime',
     ];
 
     /**

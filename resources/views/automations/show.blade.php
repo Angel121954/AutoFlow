@@ -105,21 +105,35 @@
                 </div>
 
                 <div class="af-card__body" style="padding: 0 24px;">
-                    @forelse ($executions ?? [] as $execution)
+                    @forelse ($executions as $execution)
                     <div class="af-execution-item">
                         <span class="af-execution-status-dot af-execution-status-dot--{{ $execution->status }}"></span>
                         <div style="flex: 1; min-width: 0;">
                             <div style="font-size: 0.875rem; font-weight: 600; color: var(--af-text-dark); margin-bottom: 2px;">
                                 @switch($execution->status)
-                                @case('success') Ejecución exitosa @break
-                                @case('error') Error en ejecución @break
-                                @case('pending') En cola @break
-                                @default {{ ucfirst($execution->status) }}
+                                @case('completed')
+                                ✔ Ejecución exitosa
+                                @break
+
+                                @case('failed')
+                                Error en ejecución
+                                @break
+
+                                @case('pending')
+                                ⏳ En cola
+                                @break
+
+                                @case('processing')
+                                ⚙️ Ejecutando
+                                @break
+
+                                @default
+                                {{ ucfirst($execution->status) }}
                                 @endswitch
                             </div>
-                            @if ($execution->message)
-                            <div style="font-size: 0.8rem; color: var(--af-text-muted);">
-                                {{ $execution->message }}
+                            @if($execution->result)
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
+                                {{ $execution->result }}
                             </div>
                             @endif
                         </div>
