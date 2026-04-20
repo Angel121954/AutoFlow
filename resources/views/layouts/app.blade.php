@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/app/swal-theme.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="flash-success" content="{{ session('success') }}">
-    <meta name="flash-error" content="{{ session('error') }}">
+    <meta name="flash-error"   content="{{ session('error') }}">
     @stack('styles')
 </head>
 
@@ -36,42 +36,80 @@
                 <span class="af-sidebar__brand-text">AutoFlow</span>
             </a>
 
-            {{-- Navegación (componente sin slot) --}}
+            {{-- Navegación --}}
             <x-nav-link />
 
-            {{-- Usuario en el pie del sidebar --}}
+            {{-- ── Footer: dropdown de usuario ── --}}
             <div class="af-sidebar__footer">
-                <div class="af-user-pill" id="af-user-dropdown-trigger">
-                    <div class="af-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
+
+                {{-- Trigger --}}
+                <div class="af-user-pill"
+                     id="af-user-pill"
+                     role="button"
+                     tabindex="0"
+                     aria-haspopup="true"
+                     aria-expanded="false"
+                     aria-controls="af-user-dropdown">
+                    <div class="af-avatar">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    </div>
                     <div class="af-user-info">
                         <div class="af-user-info__name">{{ Auth::user()->name }}</div>
                         <div class="af-user-info__email">{{ Auth::user()->email }}</div>
                     </div>
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="2">
+                    <svg class="af-user-pill__chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </div>
 
-                {{-- Dropdown del usuario --}}
-                <div class="af-dropdown__menu af-dropdown__menu--above" id="af-user-dropdown">
-                    <a href="{{ route('profile.edit') }}" class="af-dropdown__menu-item">
-                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        Mi Perfil
-                    </a>
-                    <div class="af-dropdown__divider"></div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="af-dropdown__menu-item af-dropdown__menu-item--danger">
-                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            Cerrar sesión
-                        </button>
-                    </form>
+                {{-- Dropdown --}}
+                <div class="af-user-dropdown" id="af-user-dropdown" role="menu">
+
+                    {{-- Cabecera con info del usuario --}}
+                    <div class="af-user-dropdown__header">
+                        <div class="af-user-dropdown__avatar" aria-hidden="true">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                        </div>
+                        <div class="af-user-dropdown__info">
+                            <div class="af-user-dropdown__name">{{ Auth::user()->name }}</div>
+                            <div class="af-user-dropdown__email">{{ Auth::user()->email }}</div>
+                        </div>
+                    </div>
+
+                    {{-- Ítems --}}
+                    <div class="af-user-dropdown__body">
+
+                        <a href="{{ route('profile.edit') }}"
+                           class="af-user-dropdown__item"
+                           role="menuitem">
+                            <span class="af-user-dropdown__item-icon" aria-hidden="true">
+                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </span>
+                            Mi Perfil
+                        </a>
+
+                        <div class="af-user-dropdown__divider" role="separator"></div>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="af-user-dropdown__item af-user-dropdown__item--danger"
+                                    role="menuitem">
+                                <span class="af-user-dropdown__item-icon" aria-hidden="true">
+                                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                    </svg>
+                                </span>
+                                Cerrar sesión
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
+
+            </div>{{-- /af-sidebar__footer --}}
 
         </aside>
 

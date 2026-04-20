@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/app/swal-theme.css')); ?>">
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     <meta name="flash-success" content="<?php echo e(session('success')); ?>">
-    <meta name="flash-error" content="<?php echo e(session('error')); ?>">
+    <meta name="flash-error"   content="<?php echo e(session('error')); ?>">
     <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 
@@ -60,36 +60,76 @@
 
             
             <div class="af-sidebar__footer">
-                <div class="af-user-pill" id="af-user-dropdown-trigger">
-                    <div class="af-avatar"><?php echo e(strtoupper(substr(Auth::user()->name, 0, 2))); ?></div>
+
+                
+                <div class="af-user-pill"
+                     id="af-user-pill"
+                     role="button"
+                     tabindex="0"
+                     aria-haspopup="true"
+                     aria-expanded="false"
+                     aria-controls="af-user-dropdown">
+                    <div class="af-avatar">
+                        <?php echo e(strtoupper(substr(Auth::user()->name, 0, 2))); ?>
+
+                    </div>
                     <div class="af-user-info">
                         <div class="af-user-info__name"><?php echo e(Auth::user()->name); ?></div>
                         <div class="af-user-info__email"><?php echo e(Auth::user()->email); ?></div>
                     </div>
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="2">
+                    <svg class="af-user-pill__chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </div>
 
                 
-                <div class="af-dropdown__menu af-dropdown__menu--above" id="af-user-dropdown">
-                    <a href="<?php echo e(route('profile.edit')); ?>" class="af-dropdown__menu-item">
-                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        Mi Perfil
-                    </a>
-                    <div class="af-dropdown__divider"></div>
-                    <form method="POST" action="<?php echo e(route('logout')); ?>">
-                        <?php echo csrf_field(); ?>
-                        <button type="submit" class="af-dropdown__menu-item af-dropdown__menu-item--danger">
-                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            Cerrar sesión
-                        </button>
-                    </form>
+                <div class="af-user-dropdown" id="af-user-dropdown" role="menu">
+
+                    
+                    <div class="af-user-dropdown__header">
+                        <div class="af-user-dropdown__avatar" aria-hidden="true">
+                            <?php echo e(strtoupper(substr(Auth::user()->name, 0, 2))); ?>
+
+                        </div>
+                        <div class="af-user-dropdown__info">
+                            <div class="af-user-dropdown__name"><?php echo e(Auth::user()->name); ?></div>
+                            <div class="af-user-dropdown__email"><?php echo e(Auth::user()->email); ?></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="af-user-dropdown__body">
+
+                        <a href="<?php echo e(route('profile.edit')); ?>"
+                           class="af-user-dropdown__item"
+                           role="menuitem">
+                            <span class="af-user-dropdown__item-icon" aria-hidden="true">
+                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </span>
+                            Mi Perfil
+                        </a>
+
+                        <div class="af-user-dropdown__divider" role="separator"></div>
+
+                        <form method="POST" action="<?php echo e(route('logout')); ?>">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit"
+                                    class="af-user-dropdown__item af-user-dropdown__item--danger"
+                                    role="menuitem">
+                                <span class="af-user-dropdown__item-icon" aria-hidden="true">
+                                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                    </svg>
+                                </span>
+                                Cerrar sesión
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
+
             </div>
 
         </aside>

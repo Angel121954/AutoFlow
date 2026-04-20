@@ -246,59 +246,177 @@
     color: var(--af-text-muted);
 }
 
-/* Dropdown usuario */
-.af-dropdown {
-    position: relative;
-}
-.af-dropdown__trigger {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    padding: 4px 8px;
-    border-radius: var(--af-radius);
-    transition: background var(--af-transition);
-}
-.af-dropdown__trigger:hover { background: var(--af-bg); }
 
-.af-dropdown__menu {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    background: var(--af-bg-card);
-    border: 1px solid var(--af-border);
-    border-radius: var(--af-radius-lg);
-    box-shadow: var(--af-shadow-md);
-    min-width: 200px;
-    padding: 6px;
-    z-index: 100;
-    display: none;
-}
-.af-dropdown__menu.open { display: block; }
-.af-dropdown__menu-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border-radius: var(--af-radius);
-    font-size: 0.875rem;
-    color: var(--af-text-medium);
-    text-decoration: none;
-    transition: background var(--af-transition);
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    background: none;
-    text-align: left;
-    font-family: var(--af-font);
-}
-.af-dropdown__menu-item:hover { background: var(--af-bg); color: var(--af-text-dark); }
-.af-dropdown__menu-item--danger:hover { background: var(--af-danger-light); color: var(--af-danger-text); }
-.af-dropdown__divider { height: 1px; background: var(--af-border-light); margin: 4px 0; }
 
-/* ── Contenido ── */
+/* ══════════════════════════════════════════════════════
+   DROPDOWN DE USUARIO — Sidebar footer
+   ====================================================== */
+
+/* Contenedor relativo para posicionar el dropdown */
+.af-sidebar__footer {
+    position : relative;
+}
+
+/* ── Pill del usuario (trigger) ── */
+.af-user-pill {
+    display       : flex;
+    align-items   : center;
+    gap           : 10px;
+    padding       : 8px 10px;
+    border-radius : var(--af-radius);
+    cursor        : pointer;
+    transition    : background var(--af-transition);
+    user-select   : none;
+}
+.af-user-pill:hover,
+.af-user-pill.is-open {
+    background : var(--af-bg);
+}
+
+/* Flecha del pill */
+.af-user-pill__chevron {
+    margin-left : auto;
+    color       : #94a3b8;
+    transition  : transform 0.22s ease;
+    flex-shrink : 0;
+}
+.af-user-pill.is-open .af-user-pill__chevron {
+    transform : rotate(180deg);
+}
+
+/* ── Dropdown ── */
+.af-user-dropdown {
+    position      : absolute;
+    bottom        : calc(100% + 10px);
+    left          : 0;
+    right         : 0;
+    background    : var(--af-bg-card);
+    border        : 1px solid var(--af-border);
+    border-radius : var(--af-radius-lg);
+    box-shadow    : 0 -4px 24px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    z-index       : 200;
+    overflow      : hidden;
+
+    /* Animación */
+    opacity         : 0;
+    transform       : translateY(6px) scale(0.98);
+    pointer-events  : none;
+    transition      : opacity 0.18s ease, transform 0.18s ease;
+    transform-origin: bottom center;
+}
+.af-user-dropdown.open {
+    opacity        : 1;
+    transform      : translateY(0) scale(1);
+    pointer-events : all;
+}
+
+/* ── Cabecera del dropdown con info del usuario ── */
+.af-user-dropdown__header {
+    padding         : 14px 14px 12px;
+    border-bottom   : 1px solid var(--af-border-light);
+    display         : flex;
+    align-items     : center;
+    gap             : 10px;
+    background      : var(--af-bg);
+}
+.af-user-dropdown__avatar {
+    width           : 36px;
+    height          : 36px;
+    border-radius   : 50%;
+    background      : var(--af-primary-lighter);
+    color           : var(--af-primary);
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    font-size       : 0.8rem;
+    font-weight     : 700;
+    flex-shrink     : 0;
+    text-transform  : uppercase;
+}
+.af-user-dropdown__info {
+    flex      : 1;
+    min-width : 0;
+}
+.af-user-dropdown__name {
+    font-size     : 0.825rem;
+    font-weight   : 700;
+    color         : var(--af-text-dark);
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
+}
+.af-user-dropdown__email {
+    font-size     : 0.725rem;
+    color         : var(--af-text-placeholder);
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
+    margin-top    : 1px;
+}
+
+/* ── Cuerpo del dropdown ── */
+.af-user-dropdown__body {
+    padding : 6px;
+}
+
+/* ── Ítem del dropdown ── */
+.af-user-dropdown__item {
+    display         : flex;
+    align-items     : center;
+    gap             : 10px;
+    padding         : 9px 12px;
+    border-radius   : var(--af-radius);
+    font-size       : 0.875rem;
+    font-weight     : 500;
+    color           : var(--af-text-medium);
+    text-decoration : none;
+    transition      : background var(--af-transition), color var(--af-transition);
+    cursor          : pointer;
+    width           : 100%;
+    border          : none;
+    background      : none;
+    text-align      : left;
+    font-family     : var(--af-font);
+    line-height     : 1;
+}
+.af-user-dropdown__item:hover {
+    background : var(--af-bg);
+    color      : var(--af-text-dark);
+}
+.af-user-dropdown__item--danger {
+    color : var(--af-danger);
+}
+.af-user-dropdown__item--danger:hover {
+    background : var(--af-danger-light);
+    color      : var(--af-danger-text);
+}
+
+/* Icono del ítem */
+.af-user-dropdown__item-icon {
+    width           : 28px;
+    height          : 28px;
+    border-radius   : 6px;
+    background      : var(--af-bg);
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    flex-shrink     : 0;
+    transition      : background var(--af-transition);
+}
+.af-user-dropdown__item:hover .af-user-dropdown__item-icon {
+    background : var(--af-border-light);
+}
+.af-user-dropdown__item--danger .af-user-dropdown__item-icon {
+    background : var(--af-danger-light);
+}
+
+/* Divider */
+.af-user-dropdown__divider {
+    height     : 1px;
+    background : var(--af-border-light);
+    margin     : 4px 6px;
+}
+
 .af-content {
     flex: 1;
     padding: 28px;
@@ -371,12 +489,6 @@
     text-decoration : none;
 }
 
-/* ── Dropdown hacia arriba (sidebar footer) ── */
-.af-dropdown__menu--above {
-    bottom : calc(100% + 8px);
-    top    : auto;
-    width  : 100%;
-}
 
 /* ── Utilidad: oculto por defecto (controlado por JS) ── */
 .af-hidden {
