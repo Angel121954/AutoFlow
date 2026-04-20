@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="{{ asset('css/autoflow.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app/layout.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app/swal-theme.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="flash-success" content="{{ session('success') }}">
     <meta name="flash-error"   content="{{ session('error') }}">

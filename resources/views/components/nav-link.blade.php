@@ -24,7 +24,7 @@
     </a>
 
     {{-- Abre el modal directamente via JS si está disponible --}}
-    <a href="{{ route('automations.index') }}?new=1"
+    <a href="{{ route('automations.index') }}"
        class="af-nav-item {{ request()->routeIs('automations.create') ? 'active' : '' }}"
        id="af-nav-new-automation">
         <svg class="af-nav-item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">

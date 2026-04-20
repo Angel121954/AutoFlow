@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="<?php echo e(asset('css/autoflow.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/app/layout.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/app/swal-theme.css')); ?>">
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     <meta name="flash-success" content="<?php echo e(session('success')); ?>">
     <meta name="flash-error"   content="<?php echo e(session('error')); ?>">

@@ -24,7 +24,7 @@
     </a>
 
     
-    <a href="<?php echo e(route('automations.index')); ?>?new=1"
+    <a href="<?php echo e(route('automations.index')); ?>"
        class="af-nav-item <?php echo e(request()->routeIs('automations.create') ? 'active' : ''); ?>"
        id="af-nav-new-automation">
         <svg class="af-nav-item__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
